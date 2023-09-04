@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import styles from "./App.module.css";
+import { LoadingContext } from "./context/LoadingProvider";
+import NavigationBar from "./components/NavigationBar/NavigationBar";
+import AppRoute from "./routes/AppRoute";
+import Motto from "./components/Motto/Motto";
+import Loading from "./components/Loading/Loading";
+import Home from "./pages/Home/Home";
+import Spacecrafts from "./pages/Spacecrafts/Spacecrafts";
+import SpacecraftBuild from "./pages/SpacecraftBuild/SpacecraftBuild";
+import Spacecraft from "./pages/Spacecraft/Spacecraft";
+import Planets from "./pages/Planets/Planets";
+
+export default function App() {
+  //const { isLoading } = useContext(LoadingContext);
+  const isLoading = false;
+
+  if (!isLoading) {
+    return (
+      // todo wrap with BrowserRouter and render the necessary components
+      <div className={styles["app"]}>
+        <Router>
+          <header className={styles["app__header"]}>
+            <NavigationBar />
+          </header>
+
+          <main className={styles["app__main"]}>
+            <AppRoute />
+          </main>
+
+          <footer className={styles["app__footer"]}>
+            <Motto />
+          </footer>
+        </Router>
+      </div>
+    );
+  } else {
+    // todo render Loading based on its condition
+    return <Loading />;
+  }
 }
-
-export default App;
